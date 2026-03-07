@@ -181,14 +181,14 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: "bold",
-    color: "#79059C",
+    color: "#14141b",
     marginBottom: 8,
   },
   
   // Valores exibidos (nome do médico, nome do paciente, etc)
   valor: {
     fontSize: 18,
-    color: "#333",
+    color: "#030303",
     marginBottom: 4,
   },
   
