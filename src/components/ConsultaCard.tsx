@@ -1,33 +1,19 @@
 import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
-
-// Importamos a interface Consulta que criamos na aula passada
-// Ela vem de src/interfaces/ porque é usada em VÁRIOS lugares
-import { Consulta } from "../src/interfaces/consulta";
+import { View, Text, Button } from "react-native";
+import { Consulta } from "../interfaces/consulta";
+import { styles } from "../styles/consultaCard.styles";
 
 type ConsultaCardProps = {
-  // A consulta que queremos exibir (OBRIGATÓRIA)
-  // Todo ConsultaCard PRECISA receber uma consulta para funcionar
   consulta: Consulta;
-  
-  // Função chamada quando o usuário clica em "Confirmar" (OPCIONAL)
-  // Por que opcional? Às vezes queremos só exibir, sem botões de ação!
   onConfirmar?: () => void;
-  
-  // Função chamada quando o usuário clica em "Cancelar" (OPCIONAL)
   onCancelar?: () => void;
 };
-
 
 export default function ConsultaCard({
   consulta,
   onConfirmar,
   onCancelar,
 }: ConsultaCardProps) {
-  
-  
-  
-  // Formata um número para moeda brasileira (R$ 150,00)
   function formatarValor(valor: number): string {
     return valor.toLocaleString("pt-BR", {
       style: "currency",
@@ -35,16 +21,12 @@ export default function ConsultaCard({
     });
   }
 
-  // Formata uma data no padrão brasileiro (25/03/2026)
   function formatarData(data: Date): string {
     return data.toLocaleDateString("pt-BR");
   }
 
-
   return (
     <View style={styles.card}>
-      
-      
       <View
         style={[
           styles.statusBadge,
@@ -57,7 +39,6 @@ export default function ConsultaCard({
         </Text>
       </View>
 
-      
       <View style={styles.secao}>
         <Text style={styles.label}>👨‍⚕️ Médico</Text>
         <Text style={styles.valor}>{consulta.medico.nome}</Text>
@@ -65,7 +46,6 @@ export default function ConsultaCard({
         <Text style={styles.info}>{consulta.medico.especialidade.nome}</Text>
       </View>
 
-      
       <View style={styles.secao}>
         <Text style={styles.label}>👤 Paciente</Text>
         <Text style={styles.valor}>{consulta.paciente.nome}</Text>
@@ -76,7 +56,6 @@ export default function ConsultaCard({
         )}
       </View>
 
-      
       <View style={styles.secao}>
         <Text style={styles.label}>📅 Dados da Consulta</Text>
         <Text style={styles.valor}>Data: {formatarData(consulta.data)}</Text>
@@ -88,7 +67,6 @@ export default function ConsultaCard({
         )}
       </View>
 
-      
       <View style={styles.acoes}>
         {consulta.status === "agendada" && (
           <>
@@ -113,7 +91,6 @@ export default function ConsultaCard({
           </>
         )}
 
-        
         {consulta.status === "confirmada" && (
           <View style={styles.mensagem}>
             <Text style={styles.mensagemTexto}>
@@ -131,113 +108,3 @@ export default function ConsultaCard({
     </View>
   );
 }
-
-
-const styles = StyleSheet.create({
-  // Container principal do card
-  card: {
-    backgroundColor: "#fff",
-    borderRadius: 16,
-    padding: 20,
-    // Sombra no iOS
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    // Sombra no Android
-    elevation: 5,
-  },
-  
-  // Badge de status (agendada, confirmada, cancelada)
-  statusBadge: {
-    backgroundColor: "#FFA500", // Laranja (padrão para "agendada")
-    alignSelf: "flex-start",
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    marginBottom: 20,
-  },
-  statusConfirmada: {
-    backgroundColor: "#4CAF50", // Verde
-  },
-  statusCancelada: {
-    backgroundColor: "#F44336", // Vermelho
-  },
-  statusTexto: {
-    color: "#fff",
-    fontWeight: "bold",
-    fontSize: 12,
-  },
-  
-  // Seções do card (médico, paciente, dados)
-  secao: {
-    marginBottom: 20,
-    paddingBottom: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  
-  // Labels das seções (👨‍⚕️ Médico, 👤 Paciente, etc)
-  label: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#14141b",
-    marginBottom: 8,
-  },
-  
-  // Valores exibidos (nome do médico, nome do paciente, etc)
-  valor: {
-    fontSize: 18,
-    color: "#030303",
-    marginBottom: 4,
-  },
-  
-  // Informações complementares (CRM, CPF, email, etc)
-  info: {
-    fontSize: 14,
-    color: "#666",
-    marginBottom: 2,
-  },
-  
-  // Observações (texto em itálico)
-  observacoes: {
-    fontSize: 14,
-    color: "#555",
-    fontStyle: "italic",
-    marginTop: 8,
-  },
-  
-  // Container das ações (botões e mensagens)
-  acoes: {
-    marginTop: 10,
-  },
-  
-  // Espaçamento entre botões
-  botaoContainer: {
-    marginBottom: 12,
-  },
-  
-  // Mensagem de sucesso (verde)
-  mensagem: {
-    backgroundColor: "#E8F5E9",
-    padding: 16,
-    borderRadius: 8,
-    borderLeftWidth: 4,
-    borderLeftColor: "#4CAF50",
-  },
-  
-  // Mensagem de cancelamento (vermelho)
-  mensagemCancelada: {
-    backgroundColor: "#FFEBEE",
-    padding: 16,
-    borderRadius: 8,
-    borderLeftWidth: 4,
-    borderLeftColor: "#F44336",
-  },
-  mensagemTexto: {
-    fontSize: 16,
-    color: "#333",
-    fontWeight: "600",
-    textAlign: "center",
-  },
-});
